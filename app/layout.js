@@ -1,3 +1,4 @@
+import Header from "@/components/header";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -16,9 +17,14 @@ export default function RootLayout({ children }) {
         <div className="bg-[url('/paper.jpg')] opacity-50 fixed -z-10 inset-0">
 
         </div>
-        
-        <main>{children}</main>
+        <Header/>
+        <main className="min-h-screen">{children}</main>
 
+        <footer className="bg-green-300 bg-opacity-10 py-12">
+          <div className=" text-center text-gray-700">
+            <p>Made by: Ramonito Paulito</p>
+          </div>
+        </footer>
       </body>
     </html>
   );
