@@ -1,9 +1,16 @@
 import TestimonialCarousel from "@/components/testimonial-carousel";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@radix-ui/react-accordion";
 import { BarChart2, Book, Calendar, ChevronRight, FileText, Lock, Sparkles } from "lucide-react";
 import Link from "next/link";
-export default function Home() {
+import faqs from "@/data/faqs";
+import {getDailyPrompt} from "@/actions/public";
+
+
+export default async function Home() {
+
+  const advice = await getDailyPrompt();
 
   const features = [
     {
@@ -36,7 +43,7 @@ export default function Home() {
           Grow through what you go through. Each page brings you closer to who you are.
         </p>
         <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-t from-orange-50 via-transparent to-transparent pointer-events-none z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-green-50 via-transparent to-transparent pointer-events-none z-10" />
           <div className="bg-white rounded-2xl p-4 max-full mx-auto">
             <div className="border-b border-green-100 pb-4 mb-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -53,8 +60,7 @@ export default function Home() {
             </div>
             <div className="space-y-4 p-4">
               <h3 className="text-xl font-semibold text-green-900">
-                {/* {advice ? advice : "My Thoughts Today"} */}
-                My Thougts Today
+                {advice ? advice : "My Thoughts Today"}
               </h3>
               {/* <div className="h-4 bg-green-50 rounded w-full"></div>
               <div className="h-4 bg-green-50 rounded w-3/4"></div>
@@ -179,6 +185,42 @@ export default function Home() {
       {/* Testimonials Carousel */}
       <TestimonialCarousel />
 
+      {/* FAQ Section */}
+      <div className="mt-24">
+        <h2 className="text-3xl font-bold text-center text-green-900 mb-12">
+          Frequently Asked Questions
+        </h2>
+        <Accordion type="single" collapsible className="w-full mx-auto text-center space-y-2">
+          {faqs.map((faq, index) => (
+            <AccordionItem key={index} value={`item-${index}`}>
+              <AccordionTrigger className="text-green-900 text-lg">
+                {faq.q}
+              </AccordionTrigger>
+              <AccordionContent className="text-green-700">
+                {faq.a}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+
+      {/* CTA Section */}
+      <div className="mt-24">
+        <Card className="bg-gradient-to-r from-green-100 to-green-200">
+          <CardContent className="p-12 text-center">
+            <h2 className="text-3xl font-bold text-green-900 mb-6">
+              Start Journl-ing on Your Journey Today
+            </h2>
+            <p className="text-lg text-green-700 mb-8 max-w-2xl mx-auto">
+              Join thousands of writers who have already discovered the power of
+              digital journaling.
+            </p>
+            <Button size="lg" variant="green" className="animate-bounce">
+              Get Started for Free <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

@@ -38,3 +38,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 how to add a shadcn compoent to your components/ui
 - npx shadcn@latest add <component you want to add>
+
+
+
+recommend:
+send the entry journal to the email of the user
