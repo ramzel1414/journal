@@ -1,3 +1,4 @@
+import TestimonialCarousel from "@/components/testimonial-carousel";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card";
 import { BarChart2, Book, Calendar, ChevronRight, FileText, Lock, Sparkles } from "lucide-react";
@@ -177,7 +178,7 @@ export default function Home() {
 
       {/* Testimonials Carousel */}
       <TestimonialCarousel />
-      
+
     </div>
   );
 }
