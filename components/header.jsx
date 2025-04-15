@@ -10,7 +10,7 @@ import { checkUser } from '@/lib/checkUser';
 
 const Header = async () => {
 
-  // const user = await checkUser();
+  await checkUser();
 
   return (
     <header className='container mx-auto'>
