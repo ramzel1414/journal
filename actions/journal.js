@@ -10,7 +10,9 @@ import { request } from "@arcjet/next";
 
 export async function createJournalEntry(data) {
   try {
+    //getting the user from clerk
     const { userId } = await auth();
+    //if user isn't logged in say unauthorized
     if (!userId) throw new Error("Unauthorized");
 
     // Get request data for ArcJet
