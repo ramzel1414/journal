@@ -1,6 +1,6 @@
 import { getCollections } from "@/actions/collection";
 import { getJournalEntries } from "@/actions/journal";
-// import MoodAnalytics from "./_components/mood-analytics";
+import MoodAnalytics from "./_components/mood-analytics";
 import Collections from "./_components/collections";
 
 const Dashboard = async () => {
@@ -24,7 +24,7 @@ const Dashboard = async () => {
     <div className="px-4 py-8 space-y-8">
       {/* Analytics Section */}
       <section className="space-y-4">
-        {/* <MoodAnalytics /> */}
+        <MoodAnalytics />
       </section>
 
       <Collections
