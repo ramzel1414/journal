@@ -16,11 +16,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import useFetch from '@/hooks/use-fetch';
 import { createJournalEntry } from '@/actions/journal';
 import { toast } from 'sonner';
+import { createCollection, getCollections } from '@/actions/collection';
+import CollectionForm from '@/components/collection-form';
 
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
 const JournalEntryPage = () => {
+  const [isCollectionDialogOpen, setIsCollectionDialogOpen] = useState(false);
 
   const { 
     loading: actionLoading, 
@@ -28,7 +31,21 @@ const JournalEntryPage = () => {
     data: actionResult,
   } = useFetch(createJournalEntry);
 
+  const {
+    loading: collectionsLoading,
+    data: collections,
+    fn: fetchCollections,
+  } = useFetch(getCollections);
+
+  const {
+    loading: createCollectionLoading,
+    fn: createCollectionFn,
+    data: createdCollection,
+  } = useFetch(createCollection);
+
   const router = useRouter();
+
+  console.log(collections, "collections");
 
   const {
     register,
@@ -49,7 +66,9 @@ const JournalEntryPage = () => {
     },
   });
 
-  const isLoading = actionLoading;
+  useEffect(() => {
+    fetchCollections();
+  }, []);
 
   useEffect(() => {
     if(actionResult && !actionLoading) {
@@ -61,6 +80,16 @@ const JournalEntryPage = () => {
     };
   }, [actionResult,actionLoading]);
 
+  // Handle collection creation success
+  useEffect(() => {
+    if (createdCollection) {
+      setIsCollectionDialogOpen(false);
+      fetchCollections();
+      setValue("collectionId", createdCollection.id);
+      toast.success(`Collection ${createdCollection.name} created!`);
+    }
+  }, [createdCollection]);
+
   const onSubmit = handleSubmit(async (data) => {
     const mood = getMoodById(data.mood);
     actionFn({
@@ -70,6 +99,13 @@ const JournalEntryPage = () => {
       // ...(isEditMode && { id: editId }),
     });
   });
+
+  const handleCreateCollection = async (data) => {
+    createCollectionFn(data);
+  };
+
+  const isLoading = actionLoading || collectionsLoading;
+
 
   return (
     <div className='py-8'>
@@ -156,7 +192,7 @@ const JournalEntryPage = () => {
           <label className="text-sm font-medium">
             Add to Collection (Optional)
           </label>
-          {/* <Controller
+          <Controller
             name="collectionId"
             control={control}
             render={({ field }) => (
@@ -180,14 +216,14 @@ const JournalEntryPage = () => {
                     </SelectItem>
                   ))}
                   <SelectItem value="new">
-                    <span className="text-orange-600">
+                    <span className="text-green-600">
                       + Create New Collection
                     </span>
                   </SelectItem>
                 </SelectContent>
               </Select>
             )}
-          /> */}
+          />
         </div>
 
         <div className="space-x-4 flex">
@@ -224,6 +260,13 @@ const JournalEntryPage = () => {
           )} */}
         </div>
       </form>
+
+      <CollectionForm
+        loading={createCollectionLoading}
+        onSuccess={handleCreateCollection}
+        open={isCollectionDialogOpen}
+        setOpen={setIsCollectionDialogOpen}
+      />
 
     </div>
   )
