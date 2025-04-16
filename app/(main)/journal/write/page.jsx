@@ -89,6 +89,75 @@ const JournalEntryPage = () => {
             <p className="text-red-500 text-sm">{errors.mood.message}</p>
           )}
         </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            {getMoodById(getValues("mood"))?.prompt ?? "Write your thoughts..."}
+          </label>
+          <Controller
+            name="content"
+            control={control}
+            render={({ field }) => (
+              <ReactQuill
+                readOnly={isLoading}
+                theme="snow"
+                value={field.value}
+                onChange={field.onChange}
+                modules={{
+                  toolbar: [
+                    [{ header: [1, 2, 3, false] }],
+                    ["bold", "italic", "underline", "strike"],
+                    [{ list: "ordered" }, { list: "bullet" }],
+                    ["blockquote", "code-block"],
+                    ["link"],
+                    ["clean"],
+                  ],
+                }}
+              />
+            )}
+          />
+          {errors.content && (
+            <p className="text-red-500 text-sm">{errors.content.message}</p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            Add to Collection (Optional)
+          </label>
+          {/* <Controller
+            name="collectionId"
+            control={control}
+            render={({ field }) => (
+              <Select
+                onValueChange={(value) => {
+                  if (value === "new") {
+                    setIsCollectionDialogOpen(true);
+                  } else {
+                    field.onChange(value);
+                  }
+                }}
+                value={field.value}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Choose a collection..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {collections?.map((collection) => (
+                    <SelectItem key={collection.id} value={collection.id}>
+                      {collection.name}
+                    </SelectItem>
+                  ))}
+                  <SelectItem value="new">
+                    <span className="text-orange-600">
+                      + Create New Collection
+                    </span>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          /> */}
+        </div>
       </form>
 
     </div>
