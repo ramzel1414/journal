@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
 
           </div>
           <Header/>
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen container mx-auto">{children}</main>
           <Toaster richColors />
 
           <footer className="bg-green-300 bg-opacity-10 py-12">
