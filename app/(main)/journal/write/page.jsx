@@ -241,7 +241,7 @@ const JournalEntryPage = () => {
           <Button
             type="submit"
             variant="green"
-            // disabled={actionLoading || !isDirty}
+            disabled={actionLoading || !isDirty}
           >
             {/* {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {isEditMode ? "Update" : "Publish"} */}
