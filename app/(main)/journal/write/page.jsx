@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,13 +13,22 @@ import { journalSchema } from "@/app/lib/schemas";
 import { Input } from '@/components/ui/input';
 import { getMoodById, MOODS } from "@/app/lib/moods";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import useFetch from '@/hooks/use-fetch';
+import { createJournalEntry } from '@/actions/journal';
+import { toast } from 'sonner';
 
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
 const JournalEntryPage = () => {
 
-  const isLoading = false;
+  const { 
+    loading: actionLoading, 
+    fn: actionFn,
+    data: actionResult,
+  } = useFetch(createJournalEntry);
+
+  const router = useRouter();
 
   const {
     register,
@@ -40,9 +49,31 @@ const JournalEntryPage = () => {
     },
   });
 
+  const isLoading = actionLoading;
+
+  useEffect(() => {
+    if(actionResult && !actionLoading) {
+      router.push(`/collection/${actionResult.collectionId ? actionResult.collectionId : "unorganized"}`
+
+      )
+
+      toast.success('Entry created successfully');
+    };
+  }, [actionResult,actionLoading]);
+
+  const onSubmit = handleSubmit(async (data) => {
+    const mood = getMoodById(data.mood);
+    actionFn({
+      ...data,
+      moodScore: mood.score,
+      moodQuery: mood.pixabayQuery,
+      // ...(isEditMode && { id: editId }),
+    });
+  });
+
   return (
     <div className='py-8'>
-      <form action="">
+      <form className="space-y-2  mx-auto" onSubmit={onSubmit}>
         <h1 className="text-5xl md:text-6xl gradient-title">
           "What's on your mind?"
         </h1>
@@ -157,6 +188,40 @@ const JournalEntryPage = () => {
               </Select>
             )}
           /> */}
+        </div>
+
+        <div className="space-x-4 flex">
+          {/* {!isEditMode && (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleSaveDraft}
+              disabled={savingDraft || !isDirty}
+            >
+              {savingDraft && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Save as Draft
+            </Button>
+          )} */}
+          <Button
+            type="submit"
+            variant="green"
+            // disabled={actionLoading || !isDirty}
+          >
+            {/* {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isEditMode ? "Update" : "Publish"} */}
+            Publish
+          </Button>
+          {/* {isEditMode && (
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                router.push(`/journal/${existingEntry.id}`);
+              }}
+              variant="destructive"
+            >
+              Cancel
+            </Button>
+          )} */}
         </div>
       </form>
 
