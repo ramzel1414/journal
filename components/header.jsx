@@ -32,7 +32,7 @@ const Header = async () => {
           </Link>
 
           <SignedIn>
-            <Link href="/dashboard/collections">
+            <Link href="/dashboard#collections">
               <Button variant="outline" className="flex items-center gap-2">
                 <FolderOpen size={18}/>
                 <span className="hidden md:inline">Collections</span>  
