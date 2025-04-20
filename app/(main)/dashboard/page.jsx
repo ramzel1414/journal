@@ -31,7 +31,6 @@ const Dashboard = async () => {
         collections={collections}
         entriesByCollection={entriesByCollection}
       />
-      Dashboard
     </div>
   );
 };

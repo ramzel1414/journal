@@ -40,6 +40,11 @@ how to add a shadcn compoent to your components/ui
 - npx shadcn@latest add <component you want to add>
 
 
+remove .next:
+Remove-Item -Recurse -Force .next
 
 recommend:
 send the entry journal to the email of the user
+pagination of entries in collection
+soft deleete
+explore arcjet

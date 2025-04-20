@@ -25,7 +25,7 @@ const EntryCard = ({ entry }) => {
           </div>
           {entry.collection && (
             <div className="mt-4 flex items-center gap-2">
-              <span className="text-sm px-2 py-1 bg-orange-100 text-orange-800 rounded">
+              <span className="text-sm px-2 py-1 bg-green-100 text-green-800 rounded">
                 {entry.collection.name}
               </span>
             </div>
