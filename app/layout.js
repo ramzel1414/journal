@@ -6,6 +6,8 @@ import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"]})
 
+const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
 export const metadata = {
   title: "Journal Next App",
   description: "Your daily companion for life",
@@ -14,7 +16,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   
   return (
-    <ClerkProvider>
+    <ClerkProvider publishableKey={publishableKey}>
       <html lang="en">
         <body className={`${inter.className}`}>
           <div className="bg-[url('/paper.jpg')] opacity-50 fixed -z-10 inset-0">
