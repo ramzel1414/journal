@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { createCollection } from "@/actions/collection";
+import { createCollection, getCollections } from "@/actions/collection";
 import { toast } from "sonner";
 import CollectionPreview from "./collection-preview";
 import CollectionForm from "@/components/collection-form";
@@ -9,6 +9,12 @@ import useFetch from "@/hooks/use-fetch";
 
 const Collections = ({ collections = [], entriesByCollection }) => {
   const [isCollectionDialogOpen, setIsCollectionDialogOpen] = useState(false);
+
+    const {
+      loading: collectionsLoading,
+      data: fetchedcollections,
+      fn: fetchCollections,
+    } = useFetch(getCollections);
 
   const {
     loading: createCollectionLoading,
