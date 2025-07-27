@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { db } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { getMoodById, MOODS } from "@/app/lib/moods";
@@ -75,10 +75,17 @@ export async function createJournalEntry(data) {
     });
 
     revalidatePath("/dashboard");
+
+    console.log("Creating journal entry with data:", {
+      ...data,
+      userEmail: user.email,
+    });
+
     return entry;
   } catch (error) {
     throw new Error(error.message);
   }
+
 }
 
 export async function getJournalEntries({

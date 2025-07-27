@@ -19,7 +19,7 @@ import { toast } from 'sonner';
 import { createCollection, getCollections } from '@/actions/collection';
 import CollectionForm from '@/components/collection-form';
 import { Loader2 } from 'lucide-react';
-
+import { useUser } from '@clerk/nextjs';
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
@@ -63,7 +63,7 @@ const JournalEntryPage = () => {
   } = useFetch(createCollection);
 
 
-  console.log(collections, "collections");
+  // console.log(collections, "collections");
 
   const {
     register,
@@ -164,7 +164,7 @@ const JournalEntryPage = () => {
       return;
     }
     const result = await saveDraftFn(formData);
-    console.log(result);
+    // console.log(result);
     if (result?.success) {
       toast.success("Draft saved successfully");
     }
@@ -182,6 +182,15 @@ const JournalEntryPage = () => {
     actionLoading ||
     savingDraft;
 
+
+  const { user} = useUser();
+  const logger = () => {
+    const values = getValues();
+    const email = user?.primaryEmailAddress?.emailAddress;
+
+    console.log("Journal Entry:", values);
+    console.log("User Email:", email);
+  }
 
   return (
     <div className='py-8'>
@@ -334,6 +343,12 @@ const JournalEntryPage = () => {
             </Button>
           )}
         </div>
+        <Button
+          type="button"
+          onClick={ logger }
+        >
+          Email
+        </Button>
       </form>
 
       <CollectionForm
