@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { Email } from './email';
+// import { Email } from './email';
 
 const resend = new Resend('re_123456789');
 
