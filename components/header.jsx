@@ -17,9 +17,9 @@ const Header = async () => {
       <nav className='py-6 px-4 flex justify-between items-center'>
         <Link href={"/"}>
           <Image 
-            src={'/journal.jpg'} 
-            alt='Journal Logo' 
-            width={60} 
+            src={'/dialy-nobg.png'} 
+            alt='Dialy Logo' 
+            width={70} 
             height={60} 
           />
         </Link>

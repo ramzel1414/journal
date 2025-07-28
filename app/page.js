@@ -36,12 +36,18 @@ export default async function Home() {
   return (
     <div className="relative container mx-auto px-4 py-16">
       <div className="max-w-5xl mx-auto text-center space-y-8">
-        <h1 className="gradient-title text-5xl md:text-6xl lg:text-7xl mb-6">
+        {/* <h1 className="gradient-title text-5xl md:text-6xl lg:text-7xl mb-6">
           Every Moment  Matters. <br /> Viva La Vida.
         </h1>
+        */}
+        <h1 className="gradient-title text-5xl md:text-6xl lg:text-7xl mb-6">
+          Your Daily Journal. <br /> Document Every Moment.
+        </h1>
         <p className="text-lg md:text-xl text-green-800 mb-8">
-          Grow through what you go through. Each page brings you closer to who you are.
-        </p>
+          You don't get to relive today. Write it down before it slips away.
+        </p> 
+
+
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-t from-green-50 via-transparent to-transparent pointer-events-none z-10" />
           <div className="bg-white rounded-2xl p-4 max-full mx-auto">
@@ -209,15 +215,18 @@ export default async function Home() {
         <Card className="bg-gradient-to-r from-green-100 to-green-200">
           <CardContent className="p-12 text-center">
             <h2 className="text-3xl font-bold text-green-900 mb-6">
-              Start Journl-ing on Your Journey Today
+              Start Journling on Your Journey Today
             </h2>
             <p className="text-lg text-green-700 mb-8 max-w-2xl mx-auto">
               Join thousands of writers who have already discovered the power of
               digital journaling.
             </p>
-            <Button size="lg" variant="green" className="animate-bounce">
-              Get Started for Free <ChevronRight className="ml-2 h-4 w-4" />
-            </Button>
+            <Link href="/journal/write">
+              <Button size="lg" variant="green" className="animate-bounce">
+                Get Started for Free <ChevronRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+
           </CardContent>
         </Card>
       </div>
