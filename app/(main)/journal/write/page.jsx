@@ -184,13 +184,55 @@ const JournalEntryPage = () => {
 
 
   const { user} = useUser();
-  const logger = () => {
-    const values = getValues();
+
+  // const logger = () => {
+  //   const values = getValues();
+  //   const email = user?.primaryEmailAddress?.emailAddress;
+
+  //   if (!email) {
+  //   toast.error("User email not found.");
+  //   return;
+  //   }
+  //   console.log("Journal Entry:", values);
+  //   console.log("User Email:", email);
+  // }
+
+  const logger = async () => {
+    const values = getValues(); // title, mood, content
     const email = user?.primaryEmailAddress?.emailAddress;
 
-    console.log("Journal Entry:", values);
-    console.log("User Email:", email);
-  }
+    if (!email) {
+      toast.error("User email not found.");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          title: values.title,
+          mood: values.mood,
+          content: values.content,
+        }),
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        toast.success("Journal emailed successfully!");
+      } else {
+        toast.error(result.error || "Failed to send email.");
+      }
+    } catch (error) {
+      console.error("Email error:", error);
+      toast.error("Something went wrong while sending the email.");
+    }
+  };
+
 
   return (
     <div className='py-8'>
