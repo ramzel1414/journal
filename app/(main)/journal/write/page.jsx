@@ -20,6 +20,8 @@ import { createCollection, getCollections } from '@/actions/collection';
 import CollectionForm from '@/components/collection-form';
 import { Loader2 } from 'lucide-react';
 import { useUser } from '@clerk/nextjs';
+import { Mail } from 'lucide-react';
+
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
@@ -366,6 +368,15 @@ const JournalEntryPage = () => {
             </Button>
           )}
           <Button
+            type="button"
+            variant="outline"
+            onClick={ logger }
+          >
+            {/* <Mail className="mr-2 h-4 w-4" /> */}
+            
+            Send to Email
+          </Button>
+          <Button
             type="submit"
             variant="green"
             disabled={actionLoading || !isDirty}
@@ -384,13 +395,9 @@ const JournalEntryPage = () => {
               Cancel
             </Button>
           )}
+
         </div>
-        <Button
-          type="button"
-          onClick={ logger }
-        >
-          Email
-        </Button>
+
       </form>
 
       <CollectionForm
