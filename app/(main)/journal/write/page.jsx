@@ -355,7 +355,7 @@ const JournalEntryPage = () => {
           />
         </div>
 
-        <div className="space-x-4 flex">
+        <div className="space-x-4 space-y-2 flex">
           {!isEditMode && (
             <Button
               type="button"
@@ -376,6 +376,8 @@ const JournalEntryPage = () => {
             
             Send to Email
           </Button>
+
+        </div>
           <Button
             type="submit"
             variant="green"
@@ -395,9 +397,6 @@ const JournalEntryPage = () => {
               Cancel
             </Button>
           )}
-
-        </div>
-
       </form>
 
       <CollectionForm

@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
 
           <footer className="bg-green-300 bg-opacity-10 py-12">
             <div className=" text-center text-gray-700">
-              <p>Made by: Ramon</p>
+              <p>Made by: Deku</p>
             </div>
           </footer>
         </body>
